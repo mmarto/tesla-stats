@@ -21,6 +21,9 @@ class Vehicle:
         else:
             raise Exception('More than 1 vehicles detected.')
 
+    def get_drive_state(self):
+        return self.client.get(f'vehicles/{self.id}/data_request/drive_state')
+
     @property
     def id(self):
         return self.vehicle['id']
