@@ -24,6 +24,9 @@ class Vehicle:
     def get_drive_state(self):
         return self.client.get(f'vehicles/{self.id}/data_request/drive_state')
 
+    def get_charge_state(self):
+        return self.client.get(f'vehicles/{self.id}/data_request/charge_state')
+
     @property
     def id(self):
         return self.vehicle['id']
