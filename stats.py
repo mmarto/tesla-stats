@@ -6,7 +6,7 @@ import logging
 
 dt = datetime.datetime.now().date()
 
-logger = logging.getLogger('tesla.py')
+logger = logging.getLogger('tesla-stats')
 
 
 def transform_data(data):
