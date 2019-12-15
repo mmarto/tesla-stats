@@ -19,7 +19,7 @@ class Vehicle:
         if len(vehicles) == 1:
             return vehicles.pop()['state']
         else:
-            raise Exception('error')
+            raise Exception('More than 1 vehicles detected.')
 
     @property
     def id(self):
