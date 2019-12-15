@@ -1,10 +1,6 @@
 #!/usr/bin/env python3
-import requests
-import click
-import pandas as pd
-from collections import defaultdict
+
 import datetime
-import sqlalchemy as sa
 import logging
 import pathlib
 import time
@@ -58,9 +54,9 @@ def main():
     vehicles = client.get_vehicles()
 
     vehicle = vehicles.pop()
-    print(f'id: {vehicle.id}')
-    print(f'name: {vehicle.display_name}')
-    print(f'state: {vehicle.state}')
+    logger.info(f'id: {vehicle.id}')
+    logger.info(f'name: {vehicle.display_name}')
+    logger.info(f'state: {vehicle.state}')
     # state = vehicle.get_state()
     # print(state)
     if vehicle.state == 'asleep':
@@ -69,14 +65,14 @@ def main():
         while asleep:
             time.sleep(5)
             state = vehicle.get_state()
-            print(state)
+            logger.info(state)
             if state == 'online':
                 asleep = False
 
     vehicle_data = vehicle.get_vehicle_data()
-    print(vehicle_data)
+    # print(vehicle_data)
     dfs = transform_data(vehicle_data)
-    import_data(dfs)
+    import_data(dfs, config['sqlite'])
 
 
 if __name__ == "__main__":
