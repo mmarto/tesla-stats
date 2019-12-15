@@ -24,7 +24,7 @@ class TeslaClient:
                         'password': self.password}
         response = requests.post(TOKEN_URL, data=request_data)
         response_json = response.json()
-        print(response_json)
+        # print(response_json)
 
         if 'response' in response_json:
             raise AuthenticationError(response_json['response'])
