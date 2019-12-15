@@ -10,13 +10,6 @@ import base64
 from client import TeslaClient
 from stats import transform_data, import_data
 
-TESLA_API_BASE_URL = 'https://owner-api.teslamotors.com/'
-TOKEN_URL = TESLA_API_BASE_URL + 'oauth/token'
-API_URL = TESLA_API_BASE_URL + 'api/1'
-
-OAUTH_CLIENT_ID = '81527cff06843c8634fdc09e8ac0abefb46ac849f38fe1e431c2ef2106796384'
-OAUTH_CLIENT_SECRET = 'c7257eb71a564034f9419ee651c7d0e5f7aa6bfbd18bafb5c5c033b093bb2fa3'
-
 home_dir = pathlib.Path().home()
 cfg_file = home_dir / 'config' / '.creds.cfg'
 
@@ -77,6 +70,13 @@ def log_init(logs):
     logger.setLevel(logging.INFO)
 
     return logger
+
+
+center_display_state = {0: 'Off', 2: 'Normal On', 3: 'Charging Screen',
+                        7: 'Sentry Mode', 8: 'Dog Mode'}
+
+shorthand_fields = {'df': 'driver front', 'dr': 'driver rear', 'pf': 'passenger front',
+                    'pr': 'passenger rear', 'ft': 'front trunk', 'rt': 'rear trunk'}
 
 
 if __name__ == "__main__":
