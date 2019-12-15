@@ -21,28 +21,17 @@ home_dir = pathlib.Path().home()
 cfg_file = home_dir / 'config' / '.creds.cfg'
 
 script = pathlib.Path(__file__)
-logger = logging.getLogger(script.name)
-
-fmt = logging.Formatter("%(asctime)s %(name)s [%(levelname)s]: %(message)s")
-fh = logging.FileHandler(script.with_suffix('.log'))
-fh.setFormatter(fmt)
-logger.addHandler(fh)
-ch = logging.StreamHandler()
-ch.setFormatter(fmt)
-logger.addHandler(ch)
-logger.setLevel(logging.INFO)
-
-dt = datetime.datetime.now().date()
-
-logger.info(f'Start fetching data for {dt}')
 
 
 def main():
+    dt = datetime.datetime.now().date()
     config = configparser.ConfigParser()
     config.read(cfg_file)
 
     creds = config['tesla.com']
-
+    logs = config['logs']
+    logger = log_init(logs)
+    logger.info(f'Start fetching data for {dt}')
     #
     # passwd = click.prompt('Password', hide_input=True)
 
@@ -73,6 +62,21 @@ def main():
     # print(vehicle_data)
     dfs = transform_data(vehicle_data)
     import_data(dfs, config['sqlite'])
+
+
+def log_init(logs):
+    logger = logging.getLogger('tesla-stats')
+
+    fmt = logging.Formatter("%(asctime)s %(name)s [%(levelname)s]: %(message)s")
+    fh = logging.FileHandler(logs['tesla-stats'])
+    fh.setFormatter(fmt)
+    logger.addHandler(fh)
+    ch = logging.StreamHandler()
+    ch.setFormatter(fmt)
+    logger.addHandler(ch)
+    logger.setLevel(logging.INFO)
+
+    return logger
 
 
 if __name__ == "__main__":
