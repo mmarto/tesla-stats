@@ -34,9 +34,9 @@ def transform_data(data):
     return dfs
 
 
-def import_data(dfs, db):
+def import_data(dfs, engine):
 
-    engine = sa.create_engine(f'sqlite:///{db["host"]}')
+    # engine = sa.create_engine(f'sqlite:///{db["host"]}')
     metadata = sa.MetaData(engine)
     metadata.reflect()
 

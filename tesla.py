@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import datetime
 import logging
 import pathlib
@@ -12,6 +13,11 @@ from stats import transform_data, import_data
 
 home_dir = pathlib.Path().home()
 cfg_file = home_dir / 'config' / '.creds.cfg'
+
+utils_path = home_dir / 'utils'
+sys.path.append(utils_path.as_posix())
+
+import db_utils as dbu
 
 script = pathlib.Path(__file__)
 
@@ -54,7 +60,8 @@ def main():
     vehicle_data = vehicle.get_vehicle_data()
     # print(vehicle_data)
     dfs = transform_data(vehicle_data)
-    import_data(dfs, config['sqlite'])
+    engine = dbu.get_dbconnection('MYSQL_TESLA', mysql_schema='mhristov$tesla_stats', echo=True)
+    import_data(dfs, engine)
 
 
 def log_init(logs):
