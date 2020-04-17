@@ -49,7 +49,7 @@ with sshtunnel.SSHTunnelForwarder(
     remote_bind_address=('mhristov.mysql.pythonanywhere-services.com', 3306)
 ) as tunnel:
     connection = mysql.connector.connect(
-        user='mhristov', password='mica2019db',
+        user='mhristov', password='',
         host='127.0.0.1', port=tunnel.local_bind_port,
         database='mhristov$tesla_stats', use_pure=True
     )
